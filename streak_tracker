@@ -1,0 +1,19 @@
+import openpyxl
+import datetime
+
+file_name = "/home/haboussi/gdrive/coding/solve1problem/streak.xlsx"
+workbook = openpyxl.load_workbook(file_name)
+sheet = workbook.active if "Sheet" in workbook.sheetnames else workbook.create_sheet(title="Sheet")
+
+streak = sheet["H9"].value
+row = streak + 1
+print(f"Dein streak für heute ist {streak} tagen.")
+problem_name = input("Gibst du den Problemnamen ein: ")
+
+sheet.cell(row=row, column=1, value=streak)
+sheet.cell(row=row, column=2, value=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+sheet.cell(row=row, column=3, value=problem_name)
+streak += 1
+sheet["H9"] = streak
+workbook.save(file_name)
+print("Streak erfolgreich aktualisiert!")
